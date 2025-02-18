@@ -1,62 +1,27 @@
-import React, { useState, useEffect } from "react";
-import {
-  sendSignInLinkToEmail,
-  isSignInWithEmailLink,
-  signInWithEmailLink,
-  fetchSignInMethodsForEmail,
-} from "firebase/auth";
+import React, { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebaseConfig";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
   const handleLogin = async () => {
-    if (!email) {
-      setMessage("Please enter an email.");
+    if (!email || !password) {
+      setMessage("⤫ Please enter both email and password.");
       return;
     }
 
     try {
-      // 🔥 check if email is registered in Firebase
-      const signInMethods = await fetchSignInMethodsForEmail(auth, email);
-      if (signInMethods.length === 0) {
-        setMessage("⤫ Access Denied: This email is not authorized.");
-        return;
-      }
-
-      // if email exists, send login link:
-      const actionCodeSettings = {
-        url: "http://localhost:3000/", // ⤷ redirect after login
-        handleCodeInApp: true,
-      };
-
-      await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-      window.localStorage.setItem("emailForSignIn", email);
-      setMessage("✓  Login link sent! Check your email.");
+      // Authenticate using Email & Password
+      await signInWithEmailAndPassword(auth, email, password);
+      setMessage("✓ Successfully logged in!");
     } catch (error) {
-      console.error("Error sending login email:", error);
-      setMessage("⤫ Failed to send login email.");
+      console.error("⤫ Login error:", error);
+      setMessage("⤫ Login failed. Please check your credentials.");
     }
   };
-
-  useEffect(() => {
-    if (isSignInWithEmailLink(auth, window.location.href)) {
-      let email = window.localStorage.getItem("emailForSignIn");
-      if (!email) {
-        email = window.prompt("Please confirm your email for login:");
-      }
-      signInWithEmailLink(auth, email, window.location.href)
-        .then(() => {
-          window.localStorage.removeItem("emailForSignIn");
-          setMessage("✓  Successfully logged in!");
-        })
-        .catch((error) => {
-          console.error("Sign-in error:", error);
-          setMessage("⤫ Login failed.");
-        });
-    }
-  }, []);
 
   return (
     <div style={styles.container}>
@@ -68,8 +33,15 @@ const LoginPage = () => {
         onChange={(e) => setEmail(e.target.value)}
         style={styles.input}
       />
+      <input
+        type="password"
+        placeholder="Enter your password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        style={styles.input}
+      />
       <button onClick={handleLogin} style={styles.button}>
-        Send Login Link
+        Login
       </button>
       {message && <p style={styles.message}>{message}</p>}
     </div>
@@ -94,6 +66,7 @@ const styles = {
     padding: "10px",
     fontSize: "16px",
     marginBottom: "10px",
+    width: "250px",
   },
   button: {
     padding: "10px 20px",
@@ -106,3 +79,7 @@ const styles = {
 };
 
 export default LoginPage;
+
+
+
+
