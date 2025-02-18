@@ -1,43 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import LoginPage from "./LoginPage";
 
-function App() {
-  const [ programs, setPrograms ] = useState("");
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/programs")
-      .then((response) => {
-        console.log("API Response:", response.data); // Debugging log
-        setPrograms(Array.isArray(response.data) ? response.data : []); // Ensure it's always an array
-      })
-      .catch((error) => {
-        console.error("Error connecting to backend:", error);
-        setError("❌ Failed to connect to backend.");
-      });
-  }, []);
-  
-  
-
+const App = () => {
   return (
-      <div>
-    <ul>
-  {Array.isArray(programs) && programs.length > 0 ? (
-    programs.map((program) => (
-      <li key={program.id}>
-        <strong>{program.name}</strong> <br />
-        <em>Location:</em> {program.location} <br />
-        <em>Description:</em> {program.description}
-      </li>
-    ))
-  ) : (
-    <p>No programs found.</p>
-  )}
-</ul>
-
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
