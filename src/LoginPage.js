@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; 
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebaseConfig";
 
@@ -6,6 +7,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -17,6 +19,9 @@ const LoginPage = () => {
       // Authenticate using Email & Password
       await signInWithEmailAndPassword(auth, email, password);
       setMessage("✓ Successfully logged in!");
+      setTimeout(() => {
+        navigate("/home"); // ⤷redirect to homepage
+      }, 1000); // ⤷ delayed to show success method
     } catch (error) {
       console.error("⤫ Login error:", error);
       setMessage("⤫ Login failed. Please check your credentials.");
