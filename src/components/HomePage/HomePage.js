@@ -58,11 +58,12 @@ const HomePage = () => {
             programs.map((program) => (
               <div key={program.id} className="card">
                 <h2 className="card-title">{program.name}</h2>
-                <p className="date">📅 Start Date: {formatDate(program.start_date)}</p>
+                <p className="date">𝄜  Start Date: {formatDate(program.start_date)}</p>
+                <p className="time">⏱ Start Time: {formatTime(program.start_time)}</p>
 
                 <div className="card-buttons">
                   <button className="edit-button">Edit Event</button>
-                  <button className="delete-button">Delete Event</button>
+                  <button className="delete-button">Delete</button>
                 </div>
               </div>
             ))
@@ -75,11 +76,27 @@ const HomePage = () => {
   );
 };
 
-// function to format the date into a readable format:
+// Function to format date into "Month Day, Year" (e.g., "February 20, 2025")
 const formatDate = (dateString) => {
   if (!dateString) return "No date available";
   const options = { year: "numeric", month: "long", day: "numeric" };
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
+
+// Function to format time into "hh:mm AM/PM" (e.g., "11:00 AM")
+const formatTime = (timeString) => {
+  if (!timeString) return "No time available";
+
+  // Ensure proper format by appending a date (to prevent invalid parsing)
+  const fullDateTime = `1970-01-01T${timeString}`; // Using an arbitrary date
+  const dateObj = new Date(fullDateTime);
+
+  return dateObj.toLocaleTimeString(undefined, {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true, // Converts to AM/PM format
+  });
+};
+
 
 export default HomePage;

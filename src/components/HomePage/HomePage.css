@@ -71,7 +71,7 @@ body {
   .card {
     background-color: #2A3B37;
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 3px;
     margin-bottom: 15px;
     box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
     text-align: left;
@@ -93,22 +93,22 @@ body {
   }
   
   .edit-button {
-    background-color: #FFC107;
-    color: black;
+    background-color: #1A2421;
+    color: white;
     padding: 10px;
-    border: none;
+    border: 1px solid white;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 3px;
     font-size: 1.5vw;
   }
   
   .delete-button {
-    background-color: #E74C3C;
+    background-color: #1A2421;
     color: white;
+    border: 1px solid white;
     padding: 10px;
-    border: none;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 3px;
     font-size: 1.5vw;
   }
   
