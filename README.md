@@ -39,13 +39,17 @@ Once the backend is running, follow these steps to start the **Admin User Panel*
 
 The application will be available at http://localhost:3000.
 
-## 🔑 Admin Login Credentials
+## 🔐 Authentication Setup
 
-| **Email**            | **Password**  |
-|----------------------|--------------|
-| admin@admin.com     | admin1234     |
+You'll need to set up your own credentials to be able to run this project beyond the login page.  
 
-📌 Use these credentials to log in at: [http://localhost:3000](http://localhost:3000)
+Refer to the [Firebase Authentication Docs](https://firebase.google.com/docs/auth) for details on setting up authentication.
+
+
+
+
+
+
 
 
 
