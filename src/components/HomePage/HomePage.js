@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom"; // → redirect user
 import { signOut } from "firebase/auth"; // → firebase sign-out
 import { auth } from "./../../firebaseConfig"; 
 import axios from "axios";
+import AddEventForm from "../AddEvent/AddEventForm";
 import './HomePage.css';
 
 const HomePage = () => {
   const [programs, setPrograms] = useState([]);
   const [showPrograms, setShowPrograms] = useState(false);
+  const [showAddEventForm, setShowAddEventForm] = useState(false);
   const navigate = useNavigate(); 
 
   useEffect(() => {
@@ -24,6 +26,22 @@ const HomePage = () => {
   const togglePrograms = () => {
     setShowPrograms(!showPrograms);
   };
+
+  const handleAddEventClick = () => {
+    setShowAddEventForm(true);
+  };
+
+    // refresh the programs list after an event is added:
+    const handleEventAdded = () => {
+      axios
+        .get("http://localhost:5000/programs")
+        .then((response) => {
+          setPrograms(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching programs:", error);
+        });
+    };
 
     // 🔥 logout function
     const handleLogout = async () => {
@@ -44,7 +62,16 @@ const HomePage = () => {
       <h1 className="title">Koyom Koyo Admin Dashboard</h1>
 
       {/* Add Event Button */}
-      <button className="add-button">+ Add Event</button>
+      <button className="add-button" onClick={handleAddEventClick}>+ Add Event</button>
+
+
+      {/* Modal form for adding an event */}
+      {showAddEventForm && (
+        <AddEventForm 
+          onClose={() => setShowAddEventForm(false)}
+          onEventAdded={handleEventAdded}
+        />
+      )}
 
       {/* Expand Programs Button */}
       <button onClick={togglePrograms} className="toggle-button">
