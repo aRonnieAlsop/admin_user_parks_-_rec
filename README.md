@@ -6,6 +6,9 @@ This repository contains the **Admin User Dashboard** for managing **Parks & Rec
 ## 🌐 About This Project
 
 This project is a **mock site** designed for demonstration purposes.  
+
+![Admin Dashboard GIF](https://raw.githubusercontent.com/aRonnieAlsop/admin_user_parks_-_rec/c25e1c570bd90546831390ce3aeec45323c446cf/admin_dashboard.gif)
+
 The **Admin User Interface** allows users to manage programs and events, but since this project uses **SQLite3**, the backend must be **manually updated and redeployed** for changes to take effect.
 
 ### **⚠️ Important Notes**
